@@ -34,41 +34,50 @@
         app:layout_constraintEnd_toEndOf="@+id/welcomeText"
         app:layout_constraintStart_toStartOf="@+id/welcomeText" />
 
-    <EditText
-        android:id="@+id/emailEditText"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/email_background"
-        android:drawableRight="@drawable/email_icon"
-        android:inputType="textEmailAddress"
-        android:minHeight="48dp"
-        android:paddingLeft="22px"
-        android:text="@string/enter_email"
-        android:textColor="#808080"
+        style="@style/CustomStyle"
+        android:hint="@string/enter_email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/welcomeText" />
+        app:layout_constraintTop_toBottomOf="@id/welcomeText"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="24dp">
 
-    <EditText
-        android:id="@+id/passwordEditText"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/emailEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/email_icon"
+            android:inputType="textEmailAddress"
+            android:textColor="#808080" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/email_background"
-        android:drawableRight="@drawable/lock"
-        android:inputType="textVisiblePassword"
-        android:minHeight="48dp"
-        android:paddingLeft="22px"
-        android:text="@string/password"
-        android:textColor="#808080"
+        style="@style/CustomStyle"
+        android:hint="@string/password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/emailEditText" />
+        app:layout_constraintTop_toBottomOf="@id/emailInputLayout"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="20dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/lock"
+            android:inputType="textPassword"
+            android:textColor="#808080" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/forgetPassword"
@@ -78,8 +87,8 @@
         android:text="@string/forget_password"
         android:textColor="#6C63FF"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@id/passwordEditText"
-        app:layout_constraintTop_toBottomOf="@id/passwordEditText" />
+        app:layout_constraintEnd_toEndOf="@id/passwordInputLayout"
+        app:layout_constraintTop_toBottomOf="@id/passwordInputLayout" />
 
     <Button
         android:id="@+id/loginButton"
@@ -100,7 +109,7 @@
         android:text="@string/remember_me"
         android:textSize="15sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/forgetPassword"
-        app:layout_constraintStart_toStartOf="@id/passwordEditText" />
+        app:layout_constraintStart_toStartOf="@id/passwordInputLayout" />
 
     <TextView
         android:id="@+id/registerLink"
