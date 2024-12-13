@@ -1,14 +1,15 @@
 package com.example.myapplicationnew
-import android.util.Patterns
+class CredentialsManager public constructor() {
 
-class CredentialsManager {
 
     fun isValidEmail(email: String): Boolean {
-        return email.isNotEmpty() && email.contains("@") && email.contains(".")
+        val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
+        return email.isNotEmpty() && Regex(emailRegex).matches(email)
     }
 
     fun isValidPassword(password: String): Boolean {
-        return password.isNotEmpty() && password.length >= 4
+        return password.isNotEmpty() && password.length >= 8
     }
+
 
 }
