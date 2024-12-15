@@ -1,59 +1,93 @@
 package com.example.myapplicationnew
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import com.google.android.material.textfield.TextInputLayout
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [LoginFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class LoginFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var emailEditText: EditText
+    private lateinit var passwordEditText: EditText
+    private lateinit var emailInputLayout: TextInputLayout
+    private lateinit var passwordInputLayout: TextInputLayout
+    private lateinit var loginButton: Button
+    private lateinit var registerText: TextView
+
+    private val credentialsManager = CredentialsManager.instance
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false)
+    ): View {
+        val view = inflater.inflate(R.layout.fragment_login, container, false)
+
+        // Initialize UI elements
+        emailEditText = view.findViewById(R.id.emailEditText)
+        passwordEditText = view.findViewById(R.id.passwordEditText)
+        emailInputLayout = view.findViewById(R.id.emailInputLayout)
+        passwordInputLayout = view.findViewById(R.id.passwordInputLayout)
+        loginButton = view.findViewById(R.id.loginButton)
+        registerText = view.findViewById(R.id.register)
+
+        // Set listeners
+        loginButton.setOnClickListener { onLogin() }
+        registerText.setOnClickListener { navigateToRegister() }
+
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LoginFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LoginFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    private fun onLogin() {
+        val email = emailEditText.text.toString()
+        val password = passwordEditText.text.toString()
+
+        // Validate email and password format
+        if (validateInput(email, password)) {
+            if (credentialsManager.isUserAlreadyRegistered(email)) {
+                val storedPassword = credentialsManager.getUsers()[email]
+                if (storedPassword == password) {
+                    Toast.makeText(requireContext(), "Login successful!", Toast.LENGTH_SHORT).show()
+                } else {
+                    passwordInputLayout.error = "Incorrect password"
                 }
+            } else {
+                emailInputLayout.error = "User not registered"
             }
+        }
+    }
+
+    private fun validateInput(email: String, password: String): Boolean {
+        var isValid = true
+
+        if (!credentialsManager.isValidEmail(email)) {
+            emailInputLayout.error = "Invalid email format"
+            isValid = false
+        } else {
+            emailInputLayout.error = null
+        }
+
+
+        if (!credentialsManager.isValidPassword(password)) {
+            passwordInputLayout.error = "Password must be at least 8 characters"
+            isValid = false
+        } else {
+            passwordInputLayout.error = null
+        }
+
+        return isValid
+    }
+
+    // Navigate to RegisterFragment
+    private fun navigateToRegister() {
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, RegisterFragment())
+            .addToBackStack(null)  // Allow back navigation to this fragment
+            .commit()
     }
 }

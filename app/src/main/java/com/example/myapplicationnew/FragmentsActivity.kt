@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.myapplicationnew.FragmentA
-import com.example.myapplicationnew.FragmentB
 
 class FragmentsActivity : AppCompatActivity() {
 
@@ -15,23 +13,22 @@ class FragmentsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fragments)
 
-        // Set initial fragment
+        // Start with the LoginFragment when the activity is first created
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, FragmentA()) // Show FragmentA initially
+                .replace(R.id.fragmentContainer, LoginFragment())
                 .commit()
         }
 
-        // Button click to switch fragments
+        // Switch between fragments when the button is clicked
         switchFragmentButton.setOnClickListener {
             val currentFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer)
-            val newFragment = if (currentFragment is FragmentA) {
-                FragmentB()
+            val newFragment: Fragment = if (currentFragment is LoginFragment) {
+                RegisterFragment()
             } else {
-                FragmentA()
+                LoginFragment()
             }
 
-            // Switch to the new fragment
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, newFragment)
                 .commit()
