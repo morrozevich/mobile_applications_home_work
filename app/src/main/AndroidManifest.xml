@@ -13,8 +13,16 @@
         android:theme="@style/Theme.MyApplicationNew"
         tools:targetApi="31">
         <activity
+            android:name=".RecipeAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".Recipe"
+            android:exported="false" />
+        <activity
+            android:name=".ListActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
-
             android:exported="false" />
         <activity
             android:name=".register_window"
