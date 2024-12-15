@@ -1,5 +1,6 @@
 package com.example.myapplicationnew
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -53,6 +54,10 @@ class LoginFragment : Fragment() {
                 val storedPassword = credentialsManager.getUsers()[email]
                 if (storedPassword == password) {
                     Toast.makeText(requireContext(), "Login successful!", Toast.LENGTH_SHORT).show()
+                    // Navigate to ListActivity
+                    val intent = Intent(requireContext(), ListActivity::class.java)
+                    startActivity(intent)
+                    activity?.finish()
                 } else {
                     passwordInputLayout.error = "Incorrect password"
                 }
