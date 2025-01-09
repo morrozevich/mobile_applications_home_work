@@ -26,18 +26,8 @@ class register_window : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_window)
-
-
-        enableEdgeToEdge()
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-
-        // Handle the "Login" link click event
         loginText.setOnClickListener {
-            navigateToLogin() // Navigate to login screen
+            navigateToLogin()
         }
 
         // Handle the Register button click event

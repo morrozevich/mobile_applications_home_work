@@ -19,8 +19,10 @@ class RecipeDetailActivity : AppCompatActivity() {
         textViewDetailDescription = findViewById(R.id.textViewDetailDescription)
 
         val recipe = intent.getSerializableExtra("recipe") as Recipe
+
         imageViewDetail.setImageResource(recipe.imageResource)
         textViewDetailName.text = recipe.name
         textViewDetailDescription.text = recipe.description
+
     }
 }
