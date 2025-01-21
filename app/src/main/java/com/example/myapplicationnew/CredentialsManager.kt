@@ -1,9 +1,22 @@
 package com.example.myapplicationnew
 
 import android.util.Log
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 class CredentialsManager public constructor() {
+    private val _isLoggedIn = MutableStateFlow(false)
+    val isLoggedIn: StateFlow<Boolean> = _isLoggedIn
 
+    fun login() {
+        _isLoggedIn.value = true
+        Log.d("CredentialsManager", "User logged in: ${_isLoggedIn.value}")
+
+    }
+
+    fun logout() {
+        _isLoggedIn.value = false
+    }
     private val existingUsers = mutableMapOf<String, String>()
 
     // Singleton instance
@@ -12,7 +25,6 @@ class CredentialsManager public constructor() {
     }
 
     init {
-        // Initialize with some dummy data
         existingUsers["user111@gmail.com"] = "password123"
         existingUsers["userNew@tt.com"] = "password456"
         existingUsers["test@test.com"] = "password789"
@@ -39,6 +51,5 @@ class CredentialsManager public constructor() {
         return "Registration successful."
     }
 
-    // To get the map of users
     fun getUsers(): Map<String, String> = existingUsers
 }
